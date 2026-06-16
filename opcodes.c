@@ -282,3 +282,43 @@ void f_sub(stack_t **stack, unsigned int line_number)
 	(*stack)->prev = NULL;
 	free(temp);
 }
+
+/**
+ * f_mod - computes the remainder of the division of the second top element
+ * by the top element of the stack
+ * @stack: double pointer to the head of the stack
+ * @line_number: counter for the line number
+ * Return: void
+ */
+void f_mod(stack_t **stack, unsigned int line_number)
+{
+	stack_t *temp;
+
+	if (*stack == NULL || (*stack)->next == NULL)
+	{
+		fprintf(stderr, "L%u: can't mod, stack too short\n", line_number);
+		free_stack(*stack);
+		free(bus.content);
+		fclose(bus.file);
+		exit(EXIT_FAILURE);
+	}
+
+	/* Check for division by zero */
+	if ((*stack)->n == 0)
+	{
+		fprintf(stderr, "L%u: division by zero\n", line_number);
+		free_stack(*stack);
+		free(bus.content);
+		fclose(bus.file);
+		exit(EXIT_FAILURE);
+	}
+
+	/* Compute modulo of second top element by top element */
+	(*stack)->next->n %= (*stack)->n;
+
+	/* Remove the top node */
+	temp = *stack;
+	*stack = (*stack)->next;
+	(*stack)->prev = NULL;
+	free(temp);
+}
