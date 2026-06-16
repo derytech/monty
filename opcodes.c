@@ -322,3 +322,33 @@ void f_mod(stack_t **stack, unsigned int line_number)
 	(*stack)->prev = NULL;
 	free(temp);
 }
+
+/**
+ * f_pchar - prints the char at the top of the stack, followed by a new line
+ * @stack: double pointer to the head of the stack
+ * @line_number: counter for the line number
+ * Return: void
+ */
+void f_pchar(stack_t **stack, unsigned int line_number)
+{
+	if (*stack == NULL)
+	{
+		fprintf(stderr, "L%u: can't pchar, stack empty\n", line_number);
+		free_stack(*stack);
+		free(bus.content);
+		fclose(bus.file);
+		exit(EXIT_FAILURE);
+	}
+
+	/* Validate if the number sits within the ASCII boundary (0 - 127) */
+	if ((*stack)->n < 0 || (*stack)->n > 127)
+	{
+		fprintf(stderr, "L%u: can't pchar, value out of range\n", line_number);
+		free_stack(*stack);
+		free(bus.content);
+		fclose(bus.file);
+		exit(EXIT_FAILURE);
+	}
+
+	printf("%c\n", (*stack)->n);
+}
