@@ -10,6 +10,7 @@ void execute_opcode(char *opcode, stack_t **stack, unsigned int line_number)
 		{"pop", f_pop},
 		{"swap", f_swap},
 		{"add", f_add},
+		{"nop", f_nop},
 		{NULL, NULL}
 	};
 
