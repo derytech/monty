@@ -17,6 +17,7 @@ void execute_opcode(char *opcode, stack_t **stack, unsigned int line_number)
 		{"mod", f_mod},
 		{"pchar", f_pchar},
 		{"pstr", f_pstr},
+		{"rotl", f_rotl},
 		{NULL, NULL}
 	};
 

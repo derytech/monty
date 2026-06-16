@@ -376,3 +376,33 @@ void f_pstr(stack_t **stack, unsigned int line_number)
 	}
 	printf("\n");
 }
+
+/**
+ * f_rotl - rotates the stack to the top
+ * @stack: double pointer to the head of the stack
+ * @line_number: counter for the line number (unused)
+ * Return: void
+ */
+void f_rotl(stack_t **stack, unsigned int line_number)
+{
+	stack_t *top = *stack;
+	stack_t *current = *stack;
+	(void)line_number;
+
+	/* If stack is empty or has only one element, do nothing */
+	if (*stack == NULL || (*stack)->next == NULL)
+		return;
+
+	/* Advance the new head pointer to the second element */
+	*stack = top->next;
+	(*stack)->prev = NULL;
+
+	/* Traverse down to find the last node of the stack */
+	while (current->next != NULL)
+		current = current->next;
+
+	/* Attach the old top node to the bottom of the stack */
+	current->next = top;
+	top->prev = current;
+	top->next = NULL;
+}
