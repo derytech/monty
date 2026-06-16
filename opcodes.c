@@ -437,3 +437,91 @@ void f_rotr(stack_t **stack, unsigned int line_number)
 	/* Make the last node the new head of the stack */
 	*stack = current;
 }
+
+/**
+ * f_push - pushes an element to the stack or queue depending on mode
+ * @stack: double pointer to the head of the stack
+ * @line_number: counter for the line number
+ * Return: void
+ */
+void f_push(stack_t **stack, unsigned int line_number)
+{
+	int n;
+	stack_t *new_node, *aux;
+
+	if (!bus.arg || check_num(bus.arg) != 0)
+	{
+		fprintf(stderr, "L%u: usage: push integer\n", line_number);
+		free_stack(*stack);
+		free(bus.content);
+		fclose(bus.file);
+		exit(EXIT_FAILURE);
+	}
+
+	n = atoi(bus.arg);
+	new_node = malloc(sizeof(stack_t));
+	if (!new_node)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		free_stack(*stack);
+		free(bus.content);
+		fclose(bus.file);
+		exit(EXIT_FAILURE);
+	}
+	new_node->n = n;
+	new_node->next = NULL;
+
+	if (bus.lifi == 1)
+	{
+		aux = *stack;
+		if (aux)
+		{
+			while (aux->next)
+				aux = aux->next;
+		}
+		if (!aux)
+		{
+			*stack = new_node;
+			new_node->prev = NULL;
+		}
+		else
+		{
+			aux->next = new_node;
+			new_node->prev = aux;
+		}
+	}
+	else
+	{
+		new_node->next = *stack;
+		new_node->prev = NULL;
+		if (*stack != NULL)
+			(*stack)->prev = new_node;
+		*stack = new_node;
+	}
+}
+
+/**
+ * f_stack - sets the format of the data to a stack (LIFO)
+ * @stack: double pointer to the head of the stack
+ * @line_number: counter for the line number
+ * Return: void
+ */
+void f_stack(stack_t **stack, unsigned int line_number)
+{
+	(void)stack;
+	(void)line_number;
+	bus.lifi = 0;
+}
+
+/**
+ * f_queue - sets the format of the data to a queue (FIFO)
+ * @stack: double pointer to the head of the stack
+ * @line_number: counter for the line number
+ * Return: void
+ */
+void f_queue(stack_t **stack, unsigned int line_number)
+{
+	(void)stack;
+	(void)line_number;
+	bus.lifi = 1;
+}
