@@ -185,3 +185,42 @@ void f_nop(stack_t **stack, unsigned int line_number)
 	(void)stack;
 	(void)line_number;
 }
+
+/**
+ * f_div - divides the second top element of the stack by the top element
+ * @stack: double pointer to the head of the stack
+ * @line_number: counter for the line number
+ * Return: void
+ */
+void f_div(stack_t **stack, unsigned int line_number)
+{
+	stack_t *temp;
+
+	if (*stack == NULL || (*stack)->next == NULL)
+	{
+		fprintf(stderr, "L%u: can't div, stack too short\n", line_number);
+		free_stack(*stack);
+		free(bus.content);
+		fclose(bus.file);
+		exit(EXIT_FAILURE);
+	}
+
+	/* Check for division by zero error */
+	if ((*stack)->n == 0)
+	{
+		fprintf(stderr, "L%u: division by zero\n", line_number);
+		free_stack(*stack);
+		free(bus.content);
+		fclose(bus.file);
+		exit(EXIT_FAILURE);
+	}
+
+	/* Divide second top element by the top element */
+	(*stack)->next->n /= (*stack)->n;
+
+	/* Pop off the top element */
+	temp = *stack;
+	*stack = (*stack)->next;
+	(*stack)->prev = NULL;
+	free(temp);
+}
