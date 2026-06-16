@@ -1,5 +1,10 @@
 #include "monty.h"
 
+/**
+ * check_num - checks if a string is a valid integer
+ * @str: string to check
+ * Return: 0 if valid, 1 if not
+ */
 int check_num(char *str)
 {
 	int i = 0;
@@ -17,6 +22,12 @@ int check_num(char *str)
 	return (0);
 }
 
+/**
+ * f_push - pushes an element to the stack
+ * @stack: double pointer to the head of the stack
+ * @line_number: counter for the line number
+ * Return: void
+ */
 void f_push(stack_t **stack, unsigned int line_number)
 {
 	int n;
@@ -49,6 +60,12 @@ void f_push(stack_t **stack, unsigned int line_number)
 	*stack = new_node;
 }
 
+/**
+ * f_pall - prints all the values on the stack
+ * @stack: double pointer to the head of the stack
+ * @line_number: counter for the line number
+ * Return: void
+ */
 void f_pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *current = *stack;
@@ -61,6 +78,12 @@ void f_pall(stack_t **stack, unsigned int line_number)
 	}
 }
 
+/**
+ * f_pint - prints the value at the top of the stack
+ * @stack: double pointer to the head of the stack
+ * @line_number: counter for the line number
+ * Return: void
+ */
 void f_pint(stack_t **stack, unsigned int line_number)
 {
 	if (*stack == NULL)
@@ -74,6 +97,12 @@ void f_pint(stack_t **stack, unsigned int line_number)
 	printf("%d\n", (*stack)->n);
 }
 
+/**
+ * f_pop - removes the top element of the stack
+ * @stack: double pointer to the head of the stack
+ * @line_number: counter for the line number
+ * Return: void
+ */
 void f_pop(stack_t **stack, unsigned int line_number)
 {
 	stack_t *temp;
@@ -91,23 +120,4 @@ void f_pop(stack_t **stack, unsigned int line_number)
 	if (*stack != NULL)
 		(*stack)->prev = NULL;
 	free(temp);
-}
-
-/**
- * f_pint - prints the value at the top of the stack, followed by a new line
- * @stack: double pointer to the head of the stack
- * @line_number: counter for the line number
- * Return: void
- */
-void f_pint(stack_t **stack, unsigned int line_number)
-{
-	if (*stack == NULL)
-	{
-		fprintf(stderr, "L%u: can't pint, stack empty\n", line_number);
-		free_stack(*stack);
-		free(bus.content);
-		fclose(bus.file);
-		exit(EXIT_FAILURE);
-	}
-	printf("%d\n", (*stack)->n);
 }
