@@ -144,3 +144,32 @@ void f_swap(stack_t **stack, unsigned int line_number)
 	(*stack)->n = (*stack)->next->n;
 	(*stack)->next->n = temp;
 }
+
+/**
+ * f_add - adds the top two elements of the stack
+ * @stack: double pointer to the head of the stack
+ * @line_number: counter for the line number
+ * Return: void
+ */
+void f_add(stack_t **stack, unsigned int line_number)
+{
+	stack_t *temp;
+
+	if (*stack == NULL || (*stack)->next == NULL)
+	{
+		fprintf(stderr, "L%u: can't add, stack too short\n", line_number);
+		free_stack(*stack);
+		free(bus.content);
+		fclose(bus.file);
+		exit(EXIT_FAILURE);
+	}
+
+	/* Add top element's value to the second top element */
+	(*stack)->next->n += (*stack)->n;
+
+	/* Remove the top element */
+	temp = *stack;
+	*stack = (*stack)->next;
+	(*stack)->prev = NULL;
+	free(temp);
+}
