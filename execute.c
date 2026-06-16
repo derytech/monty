@@ -12,6 +12,7 @@ void execute_opcode(char *opcode, stack_t **stack, unsigned int line_number)
 		{"add", f_add},
 		{"nop", f_nop},
 		{"div", f_div},
+		{"mul", f_mul},
 		{NULL, NULL}
 	};
 

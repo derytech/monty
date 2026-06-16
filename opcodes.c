@@ -224,3 +224,32 @@ void f_div(stack_t **stack, unsigned int line_number)
 	(*stack)->prev = NULL;
 	free(temp);
 }
+
+/**
+ * f_mul - multiplies the second top element of the stack with the top element
+ * @stack: double pointer to the head of the stack
+ * @line_number: counter for the line number
+ * Return: void
+ */
+void f_mul(stack_t **stack, unsigned int line_number)
+{
+	stack_t *temp;
+
+	if (*stack == NULL || (*stack)->next == NULL)
+	{
+		fprintf(stderr, "L%u: can't mul, stack too short\n", line_number);
+		free_stack(*stack);
+		free(bus.content);
+		fclose(bus.file);
+		exit(EXIT_FAILURE);
+	}
+
+	/* Multiply the second top element by the top element */
+	(*stack)->next->n *= (*stack)->n;
+
+	/* Remove the top node */
+	temp = *stack;
+	*stack = (*stack)->next;
+	(*stack)->prev = NULL;
+	free(temp);
+}

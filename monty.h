@@ -7,7 +7,7 @@
 #include <string.h>
 #include <ctype.h>
 
-typedef struct stack_s
+ typedef struct stack_s
 {
 	int n;
 	struct stack_s *prev;
@@ -39,5 +39,6 @@ void f_swap(stack_t **stack, unsigned int line_number);
 void f_add(stack_t **stack, unsigned int line_number);
 void f_nop(stack_t **stack, unsigned int line_number);
 void f_div(stack_t **stack, unsigned int line_number);
+void f_mul(stack_t **stack, unsigned int line_number);
 
 #endif
