@@ -406,3 +406,34 @@ void f_rotl(stack_t **stack, unsigned int line_number)
 	top->prev = current;
 	top->next = NULL;
 }
+
+/**
+ * f_rotr - rotates the stack to the bottom
+ * @stack: double pointer to the head of the stack
+ * @line_number: counter for the line number (unused)
+ * Return: void
+ */
+void f_rotr(stack_t **stack, unsigned int line_number)
+{
+	stack_t *current = *stack;
+	(void)line_number;
+
+	/* If stack is empty or has only one element, do nothing */
+	if (*stack == NULL || (*stack)->next == NULL)
+		return;
+
+	/* Traverse all the way down to find the last node */
+	while (current->next != NULL)
+		current = current->next;
+
+	/* Detach the last node from its previous neighbor */
+	current->prev->next = NULL;
+
+	/* Wire the last node to point to the current top node */
+	current->next = *stack;
+	current->prev = NULL;
+	(*stack)->prev = current;
+
+	/* Make the last node the new head of the stack */
+	*stack = current;
+}
